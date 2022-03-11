@@ -3,6 +3,7 @@
 #include<vector>
 #include<deque>
 #include<list>
+#include <forward_list>
 using namespace std;
 using std::cin;
 using std::cout;
@@ -12,7 +13,8 @@ using std::endl;
 //#define STL_ARRAY
 //#define STL_VACTOR
 //#define STL_DEQUE
-#define STL_LIST
+//#define STL_LIST
+#define STL_FORWARD_LIST
 #define delimiter "\n------------------------------\n"
 void main()
 {
@@ -105,20 +107,38 @@ void main()
 	cout << endl;
 #endif // STL_DEQUE
 	
+#ifdef STL_LIST
 	std::list<int>::iterator it;
 	int index;
 	int value;
 	std::list<int> mylist = { 3,5,13,21 };
-	for(it=mylist.begin();it!=mylist.end();++it)
-	cout << *it << tab; cout << endl;
+	for (it = mylist.begin(); it != mylist.end(); ++it)
+		cout << *it << tab; cout << endl;
 	cout << "Введите индекс добавляемого элемента: "; cin >> index;
 	cout << "Введите значение добавляемого элемента: "; cin >> value;
-	
+
 	it = mylist.begin();
-	for (int i = 0; i < index;++i)cout << *it << tab; 
+	for (int i = 0; i < index; ++i)++it;
 
-    mylist.insert(it, value);
+	mylist.insert(it, value);
 
-    for (it = mylist.begin(); it != mylist.end(); ++it)cout << *it << tab; cout << tab;
+	for (it = mylist.begin(); it != mylist.end(); ++it)cout << *it << tab; cout << tab;
+
+#endif // STL_LIST
+	std::forward_list<int>::iterator it;
+	int index;
+	int value;
+	std::forward_list<int> mylist = { 3,5,13,21,55,77,88 };
+	for (it = mylist.begin(); it != mylist.end(); ++it)
+		cout << *it << tab; cout << endl;
+	cout << "Введите индекс добавляемого элемента: "; cin >> index;
+	cout << "Введите значение добавляемого элемента: "; cin >> value;
+
+	it = mylist.before_begin();
+	for (int i = 0; i < index; ++i)++it;
+
+	mylist.insert_after(it, value);
+
+	for (it = mylist.begin(); it != mylist.end(); ++it)cout << *it << tab; cout << tab;
 
 }

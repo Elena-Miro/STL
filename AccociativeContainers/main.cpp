@@ -82,4 +82,4 @@ void main()
 		for (std::string j : i.second)cout << j << ", ";
 		cout << "\b\b;\n";
 	}
-}
+}=

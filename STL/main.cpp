@@ -3,6 +3,7 @@
 #include<vector>
 #include<deque>
 #include<list>
+using namespace std;
 using std::cin;
 using std::cout;
 using std::endl;
@@ -103,15 +104,21 @@ void main()
 	}
 	cout << endl;
 #endif // STL_DEQUE
-
+	
+	std::list<int>::iterator it;
 	int index;
 	int value;
 	std::list<int> mylist = { 3,5,13,21 };
-	for (int i : mylist)cout << i << tab; cout << endl;
+	for(it=mylist.begin();it!=mylist.end();++it)
+	cout << *it << tab; cout << endl;
 	cout << "Введите индекс добавляемого элемента: "; cin >> index;
 	cout << "Введите значение добавляемого элемента: "; cin >> value;
-	//for(it=mylist.begin();it!=mylist.end();++it)
-mylist.insert(index, value);
-for (int i : mylist)cout << i << tab; cout << tab;
+	
+	it = mylist.begin();
+	for (int i = 0; i < index;++i)cout << *it << tab; 
+
+    mylist.insert(it, value);
+
+    for (it = mylist.begin(); it != mylist.end(); ++it)cout << *it << tab; cout << tab;
 
 }

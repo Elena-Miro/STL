@@ -1,5 +1,5 @@
 #pragma once
-#include <iostream>
+#include <fstream>
 #include<string>
 #include<map>
 
@@ -29,4 +29,4 @@ public:
 	~Crime(){}
 };
 std::ostream& operator<<(std::ostream& os, const Crime& obj);
-
+std::ofstream& operator<<(std::ofstream& ofs, const Crime& obj);

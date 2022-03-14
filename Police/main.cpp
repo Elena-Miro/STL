@@ -1,4 +1,4 @@
-#include <iostream>
+п»ї#include <iostream>
 #include<map>
 #include<list>
 #include<string>
@@ -22,18 +22,18 @@ void main()
 
 	std::map<std::string, std::list<Crime>> base =
 	{
-		{ "a777km",{Crime(1,"улица Ленина"),Crime(2,"улица Фрунзе")} },
-		{ "a557ab",{Crime(5,"улица Космонавтов")}},
-		{ "a001а" ,{Crime(4,"перекресток Ленина"),Crime(3,"улица Октябрьская") } },
-		{ "a002а" ,{Crime(2,"перекресток Ленина"),Crime(5,"улица Октябрьская") } }
+		{ "a777km",{Crime(1,"СѓР»РёС†Р° Р›РµРЅРёРЅР°"),Crime(2,"СѓР»РёС†Р° Р¤СЂСѓРЅР·Рµ")} },
+		{ "a557ab",{Crime(5,"СѓР»РёС†Р° РљРѕСЃРјРѕРЅР°РІС‚РѕРІ")}},
+		{ "a001Р°" ,{Crime(4,"РїРµСЂРµРєСЂРµСЃС‚РѕРє Р›РµРЅРёРЅР°"),Crime(3,"СѓР»РёС†Р° РћРєС‚СЏР±СЂСЊСЃРєР°СЏ") } },
+		{ "a002Р°" ,{Crime(2,"РїРµСЂРµРєСЂРµСЃС‚РѕРє Р›РµРЅРёРЅР°"),Crime(5,"СѓР»РёС†Р° РћРєС‚СЏР±СЂСЊСЃРєР°СЏ") } }
 	};
 	print(base);
 	std::string licence_plate;
 	int id;
 	std::string place;
-	cout << "Введите номер автомобиля: "; cin >> licence_plate;
-	cout << "Введите правонарушение(номер статьи): "; cin >> id;
-	cout << "Введите место происшествия: "; 
+	cout << "Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ Р°РІС‚РѕРјРѕР±РёР»СЏ: "; cin >> licence_plate;
+	cout << "Р’РІРµРґРёС‚Рµ РїСЂР°РІРѕРЅР°СЂСѓС€РµРЅРёРµ(РЅРѕРјРµСЂ СЃС‚Р°С‚СЊРё): "; cin >> id;
+	cout << "Р’РІРµРґРёС‚Рµ РјРµСЃС‚Рѕ РїСЂРѕРёСЃС€РµСЃС‚РІРёСЏ: "; 
 	cin.clear();
 	cin.ignore();
 	std::getline(cin, place);
@@ -51,16 +51,16 @@ void main()
 	print(base);
 
 
-	//найти в базе автомобиль
+	//РЅР°Р№С‚Рё РІ Р±Р°Р·Рµ Р°РІС‚РѕРјРѕР±РёР»СЊ
 
-	cout << "Введите номер автомобиля: "; cin >> licence_plate;
+	cout << "Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ Р°РІС‚РѕРјРѕР±РёР»СЏ: "; cin >> licence_plate;
 	//std::map<std::string, std::list<Crime>>::iterator it = base.find(licence_plate);
 	
 
 	it = base.find(licence_plate);
 	if (it != base.end())
 	{
-		cout << "Номер машины: " << it->first << "  совершил правонарушения: ";
+		cout << "РќРѕРјРµСЂ РјР°С€РёРЅС‹: " << it->first << "  СЃРѕРІРµСЂС€РёР» РїСЂР°РІРѕРЅР°СЂСѓС€РµРЅРёСЏ: ";
 	
 		for (std::list<Crime>::const_iterator jt = it->second.begin(); jt != it->second.end(); ++jt)
 		{
@@ -70,12 +70,12 @@ void main()
 		cout << "\n------------------------------------\n";
 	}
 	else
-		cout << "Номер машины: " << licence_plate << "не найден!" << endl;
+		cout << "РќРѕРјРµСЂ РјР°С€РёРЅС‹: " << licence_plate << "РЅРµ РЅР°Р№РґРµРЅ!" << endl;
 	
-	//найти авто в диапаоне(not done)
+	//РЅР°Р№С‚Рё Р°РІС‚Рѕ РІ РґРёР°РїР°РѕРЅРµ(not done)
 	std::string licence_plate1;
 	std::string licence_plate2;
-	cout << "Введите дапазон номеров от: "; cin >> licence_plate; cout <<" до "<< endl; cin >> licence_plate2;
+	cout << "Р’РІРµРґРёС‚Рµ РґР°РїР°Р·РѕРЅ РЅРѕРјРµСЂРѕРІ РѕС‚: "; cin >> licence_plate; cout <<" РґРѕ "<< endl; cin >> licence_plate2;
 	it=base.lower_bound(licence_plate);
 	it = base.upper_bound(licence_plate2);
 	
@@ -96,10 +96,10 @@ void main()
 		}
 	}
 	else
-		cout << "Машин не найдено!" << endl;
+		cout << "РњР°С€РёРЅ РЅРµ РЅР°Р№РґРµРЅРѕ!" << endl;
 
 	
-	//запись в файл
+	//Р·Р°РїРёСЃСЊ РІ С„Р°Р№Р»
 		for (std::map<string, std::list<Crime>>::const_iterator it = base.begin(); it != base.end(); ++it)
 		{
 

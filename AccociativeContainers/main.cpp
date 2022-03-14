@@ -2,15 +2,21 @@
 #include<set>
 #include<map>
 #include<list>
+#include<string>
+#include <algorithm>
 
-
+using namespace std;
 using std::cin;
 using std::cout;
 using std::endl;
 //#define STL_SET
 //#define STL_MAP
-#define STL_MAP2
+//#define STL_MAP2
+#define STL_GAI
 #define tab "\t"
+
+
+
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -56,6 +62,7 @@ void main()
 		cout << it->first << tab << it->second << endl;
 	}
 #endif // STL_MAP
+#ifdef STL_MAP2
 	std::map<std::string, std::list<std::string>>dictonary
 	{
 		std::pair < std::string,std::list<std::string>>("splice",{"сращивание","сваривание","свадьба"}),
@@ -82,4 +89,30 @@ void main()
 		for (std::string j : i.second)cout << j << ", ";
 		cout << "\b\b;\n";
 	}
-}=
+#endif // STL_MAP2
+	//std::multimap::multimap<string>::const_iterator pairFound = mapIntToStr.find(Key);
+	std::map<std::string, std::list<std::string>>baza
+	{
+		std::pair < std::string,std::list<std::string>>
+		("f763hg174",{"двойная сплошная","скорость +30км/ч","не пропустил пешехода"}),
+		{"p321km174",{"скрылся с места дтп","скорость +40км/ч","проезд на запрещающий сигнал светофора"}},
+		{"x658bn196",{"превышение +30км/ч"}},
+		{"m555vc196",{"езда без ремня безопасности","отсутствие страхового полиса"}},
+		{"t777kk174",{"превышение скорости на 60км/ч","превышение скорости на 100км/ч","превышение скорости на 20 км/ч"}}
+	};
+	
+	for (std::pair<std::string, std::list<std::string>> i : baza)
+	{
+		cout.width(15);
+		cout << std::left;
+		cout << i.first + ":";
+		for (std::string j : i.second)cout << j << ", ";
+		cout << "\b\b;\n";
+
+		
+	}
+	
+	
+
+	
+}

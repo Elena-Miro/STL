@@ -1,4 +1,7 @@
-﻿#include <iostream>
+﻿#define _CRT_SECURE_NO_WARNINGS
+
+#include <iostream>
+
 #include<map>
 #include<list>
 #include<string>
@@ -11,6 +14,8 @@ using std::cin;
 using std::cout;
 using std::endl;
 
+void print_by_diapazon(const std::map < std::string, std::list<Crime>>base, const std::string& first_plate, const std::string& last_plate );
+void print_by_number(const std::map < std::string, std::list<Crime>>base, const std::string& licrnce_plate);
 void load(std::map < std::string, std::list<Crime>>& base, const std::string& filename);
 void save(const std::map < std::string, std::list<Crime>>base, const std::string& filename);
 void print(const std::map < std::string, std::list<Crime>>base);
@@ -32,7 +37,18 @@ void main()
 		{ "a002а" ,{Crime(2,"перекресток Ленина"),Crime(5,"улица Октябрьская") } }
 	}*/;
 	load(base, "base.txt");
+	
 	print(base);
+
+	/*std::string licence_plate;
+	cout << "Введите номер транспортного средства: "; cin >> licence_plate;
+	print_by_number(base, licence_plate);*/
+	std::string first_plate, last_plate;
+	cout << "Введите начальный номерной знак: "; cin >> first_plate;
+	cout << "Введите конечный номерной знак: "; cin >> last_plate;
+	print_by_diapazon(base, first_plate, last_plate);
+
+
 	//save(base, "base.txt");
 	//add(base);
 	//print(base);
@@ -150,22 +166,22 @@ void add(std::map<std::string, std::list<Crime>>& base)
 }
 void save(const std::map < std::string, std::list<Crime>>base, const std::string& filename)
 {
-	std::ofstream fout(filename);
-	for (std::pair<std::string, std::list<Crime>>i : base)
+std::ofstream fout(filename);
+for (std::pair<std::string, std::list<Crime>>i : base)
+{
+	fout << i.first << ":\t";
+	for (Crime j : i.second)
 	{
-		fout << i.first << ":\t";
-		for (Crime j : i.second)
-		{
-			fout << j << ", ";
-		}
-		fout.seekp(-2,ios::cur);//сдвигаем курсор на 2 позиции влево
-		fout << ";\n";
+		fout << j << ", ";
 	}
-	fout.close();
-	std::string command = std::string("start notepad ") + filename;
-	system(command.c_str());
+	fout.seekp(-2, ios::cur);//сдвигаем курсор на 2 позиции влево
+	fout << ";\n";
 }
-void load(std::map < std::string, std::list<Crime>>& base,  const std::string& filename)
+fout.close();
+std::string command = std::string("start notepad ") + filename;
+system(command.c_str());
+}
+void load(std::map < std::string, std::list<Crime>>& base, const std::string& filename)
 {
 	std::ifstream fin(filename);
 	if (fin.is_open())
@@ -176,10 +192,10 @@ void load(std::map < std::string, std::list<Crime>>& base,  const std::string& f
 			int id;
 			std::string place;
 			std::string crimes;
-			std::getline(fin, licence_plate,':');//читаем гос номер
+			std::getline(fin, licence_plate, ':');//читаем гос номер
 			std::getline(fin, crimes);//все правнарушения
 			if (crimes.empty())continue;//если пустая строка продолжаем 
-			if (crimes.find(',') != std::string::npos)//если больше 1 правонарушение. находим заяпятые в строке и выделяем подстроку
+			/*if (crimes.find(',') != std::string::npos)//если больше 1 правонарушение. находим заяпятые в строке и выделяем подстроку
 			{
 				for (int start = 0, end = crimes.find(','); end != std::string::npos; start = end)
 				{
@@ -198,12 +214,65 @@ void load(std::map < std::string, std::list<Crime>>& base,  const std::string& f
 				base[licence_plate].push_back(Crime(id, crimes));//добавляем в базу
 			}
 
-		}
-		fin.close();
+		}*/
+
+			char* sz_crimes = new char[crimes.size() + 1]{};
+			std::strcpy(sz_crimes, crimes.c_str());
+			char sz_delimeters[] = ",;";
+			for (char* pch = strtok(sz_crimes, sz_delimeters); pch; pch = strtok(NULL, sz_delimeters))
+			{
+				//atoi-ascii string to int
+				while (*pch == ' ')pch++;//пока строка начинается с символа пробел ,смещаем начало строки на 1 символ вправо
+				id = std::atoi(pch);//берем номер правонарушения и преобразуем его в int формат и сохраняем в ай ди
+				pch = std::strchr(pch, ' ') + 1;//для того чтобы убрать айди из строки ,находим первый пробел в строке и смещаем начало строки на символ, следующий за пробелом 
+				if (
+					std::find(base[licence_plate].begin(), base[licence_plate].end(), Crime(id, pch)) == base[licence_plate].end()
+					)
+					base[licence_plate].push_back(Crime(id, pch));
+			}
+			delete[]sz_crimes;
+		}fin.close();
 	}
 	else
 	{
 		std::cerr << "Error:file not found" << endl;
 	}
 
+}
+void print_by_number(const std::map < std::string, std::list<Crime>>base, const std::string& licrnce_plate)
+{
+	try
+	{
+		cout << licrnce_plate << ":\n";
+		for (std::list<Crime> ::const_iterator it = base.at(licrnce_plate).begin();
+			it != base.at(licrnce_plate).end();
+			++it)
+			cout << *it << endl;
+
+	}
+	catch (...)
+	{
+		std::cerr << "В базе нет такого номера" << endl;
+	}
+}
+
+void print_by_diapazon(const std::map < std::string, std::list<Crime>>base, const std::string& first_plate, const std::string& last_plate)
+{
+	try
+	{
+		for (std::map<std::string, std::list<Crime>>::const_iterator it = base.lower_bound(first_plate);
+			it != base.upper_bound(last_plate);
+			++it)
+		{
+			cout << it->first << "\n";
+			for (std::list<Crime>::const_iterator jt = it->second.begin(); jt != it->second.end(); ++jt)
+		{
+		cout << *jt << endl;
+        }
+		}
+	}
+	catch (const std::exception& e)
+	{
+		std::cerr << e.what() << endl;
+	}
 }
